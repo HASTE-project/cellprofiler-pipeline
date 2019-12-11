@@ -43,7 +43,8 @@ docker build -t "benblamey/haste_pipeline_worker:latest" ./worker
 docker push "benblamey/haste_pipeline_worker:latest"
 
 
-docker build -t "benblamey/haste_pipeline_worker:v1" ./worker ; docker run benblamey/haste_pipeline_worker:latest 
+docker build -t "benblamey/haste_pipeline_worker:latest" ./worker 
+docker run benblamey/haste_pipeline_worker:latest 
 
 docker run -it --entrypoint=/dry-run/run-imagequality.sh benblamey/haste_pipeline_worker:latest -i
 docker run -it --entrypoint=/bin/bash benblamey/haste_pipeline_worker:latest -i

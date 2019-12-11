@@ -205,7 +205,8 @@ def run_cp(filename, headers):
         logging.info('exit code from cellprofiler was {}'.format(exit_code))
 
         # exlude the possibility of a race condition when reading back the output files.
-        time.sleep(1)
+        # time.sleep(1)
+
 
         # read the output
         output_files = os.listdir(cellprofiler_output_dir)
@@ -217,7 +218,6 @@ def run_cp(filename, headers):
 
         row_lambda = eval(config_for_tag['interestingness_function'])
 
-        interestingness = None
 
         metadata = {}
         metadata.update(headers)
@@ -225,19 +225,20 @@ def run_cp(filename, headers):
         # This is 'magic' metadata -- its read by the 'MoveToDir' storage target.
         metadata['original_filename'] = filename
 
+        # interestingness = None
         with open(output_file_image_csv_path, 'r') as f:
             csv_reader = csv.DictReader(f)
             for row in csv_reader:
-                interestingness = row_lambda(row)
-                logging.info("interestingness for file: {} is: {}".format(image_file_path, interestingness))
+
+                # interestingness = row_lambda(row)
+                # logging.info("interestingness for file: {} is: {}".format(image_file_path, interestingness))
                 metadata['cellprofiler_output'] = row
                 # TODO: save the metadata from the other CSV file
                 break
 
-        if interestingness is None:
-            raise Exception('interestingness was None - terminating.')
-
-        metadata['interestingness'] = interestingness
+        # if interestingness is None:
+        #     raise Exception('interestingness was None - terminating.')
+        # metadata['interestingness'] = interestingness
 
         logging.info('starting HSC...')
         if stream_id in haste_storage_clients_by_stream_id:
@@ -248,7 +249,6 @@ def run_cp(filename, headers):
 
             # used this for version 2.
             model = NTierRankedInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
-
 
             logging.info('starting HSC...')
 
