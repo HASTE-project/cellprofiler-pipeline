@@ -39,8 +39,7 @@ docker push "benblamey/haste_pipeline_worker_base:latest"
 docker build --no-cache=true -t "benblamey/haste_pipeline_client:latest" ./client
 docker run benblamey/haste_pipeline_client:latest --include png --tag foo --host localhost /Users/benblamey/projects/haste/haste-desktop-agent-images
 
-docker build -t "benblamey/haste_pipeline_worker:latest" ./worker 
-docker push "benblamey/haste_pipeline_worker:latest"
+docker build -t "benblamey/haste_pipeline_worker:latest" ./worker ; docker push "benblamey/haste_pipeline_worker:latest"
 
 
 docker build -t "benblamey/haste_pipeline_worker:latest" ./worker 

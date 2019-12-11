@@ -3,6 +3,7 @@ import pymongo
 
 from pymongo import MongoClient
 
+import logging
 
 class NTierRankedInterestingnessModel:
 
@@ -41,10 +42,16 @@ class NTierRankedInterestingnessModel:
 
         num_docs = mongo_collection.count()
 
+        logging.debug('document count was: ' + str(num_docs))
+        logging.debug('min docs is : ' + str(self.min_docs))
+        logging.debug('num tiers is : ' + str(self.num_tiers))
+
         if num_docs < self.min_docs:
+            logging.debug('returning default interestingness when not enough docs.')
             return {'interestingness': 1.0}
 
-        indexes = [round(index / self.num_tiers * num_docs) for index in range(self.num_tiers - 1, 0, -1)]
+        # Integer division for Python 2.
+        indexes = [int(round(float(index) / self.num_tiers * num_docs)) for index in range(self.num_tiers - 1, 0, -1)]
 
         cursor = mongo_collection.find(sort=[(full_key_dots, pymongo.ASCENDING)],
                                        projection=[full_key_dots])
@@ -64,7 +71,7 @@ class NTierRankedInterestingnessModel:
         foo = metadata
         for k in self.key:
             foo = foo[k]
-        key_value = foo
+        key_value = float(foo)
 
         bools = [key_value < v for v in key_values]
 
@@ -76,7 +83,7 @@ class NTierRankedInterestingnessModel:
             # True is not in the list.
             # its bigger than all of them.
             index = self.num_tiers - 1
-        return {'interestingness': (2 * index + 1) / (2 * self.num_tiers)}
+        return {'interestingness': float(2 * index + 1) / (2 * self.num_tiers)}
 
 
 if __name__ == '__main__':

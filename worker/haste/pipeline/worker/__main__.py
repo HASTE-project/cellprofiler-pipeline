@@ -21,12 +21,12 @@ from sys import argv
 import subprocess
 import shutil
 
-from worker.haste.pipeline.worker.NTierRankedInterestingnessModel import NTierRankedInterestingnessModel
+from haste.pipeline.worker.NTierRankedInterestingnessModel import NTierRankedInterestingnessModel
 
 ARG_PARSE_PROG_NAME = 'python2 -u -m haste.pipeline.worker'
 PAUSE_SECS = 5
 
-LOGGING_LEVEL = logging.info
+LOGGING_LEVEL = logging.debug
 LOGGING_FORMAT_DATE = '%Y-%m-%d %H:%M:%S.%d3'
 LOGGING_FORMAT = '%(asctime)s - AGENT - %(threadName)s - %(levelname)s - %(message)s'
 
@@ -230,6 +230,7 @@ def run_cp(filename, headers):
             csv_reader = csv.DictReader(f)
             for row in csv_reader:
 
+                # For v2, the key to use to build the quartiles is hard coded for now, instead of using the config.
                 # interestingness = row_lambda(row)
                 # logging.info("interestingness for file: {} is: {}".format(image_file_path, interestingness))
                 metadata['cellprofiler_output'] = row
@@ -240,8 +241,8 @@ def run_cp(filename, headers):
         #     raise Exception('interestingness was None - terminating.')
         # metadata['interestingness'] = interestingness
 
-        logging.info('starting HSC...')
         if stream_id in haste_storage_clients_by_stream_id:
+            logging.info('reusing HSC...')
             hsc = haste_storage_clients_by_stream_id[stream_id]
         else:
             # Used this for version 1.
