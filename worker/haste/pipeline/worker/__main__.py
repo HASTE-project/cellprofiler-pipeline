@@ -21,6 +21,8 @@ from sys import argv
 import subprocess
 import shutil
 
+from worker.haste.pipeline.worker.NTierRankedInterestingnessModel import NTierRankedInterestingnessModel
+
 ARG_PARSE_PROG_NAME = 'python2 -u -m haste.pipeline.worker'
 PAUSE_SECS = 5
 
@@ -237,10 +239,16 @@ def run_cp(filename, headers):
 
         metadata['interestingness'] = interestingness
 
+        logging.info('starting HSC...')
         if stream_id in haste_storage_clients_by_stream_id:
             hsc = haste_storage_clients_by_stream_id[stream_id]
         else:
-            model = PreComputedInterestingnessModel()
+            # Used this for version 1.
+            # model = PreComputedInterestingnessModel()
+
+            # used this for version 2.
+            model = NTierRankedInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
+
 
             logging.info('starting HSC...')
 
@@ -262,6 +270,8 @@ def run_cp(filename, headers):
         # logging.info("output _Image.csv: \n{}".format(fin.read()))
 
         # input()
+
+        
 
     finally:
         # TODO: turn this back on -- otherwise old dirs will fill up.
