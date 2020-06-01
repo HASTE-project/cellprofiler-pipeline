@@ -41,7 +41,7 @@ class LogisticInterestingnessModel:
         return {'interestingness': interestingness_score}
 
 
-
+# bla
 # Test...
 if __name__ == '__main__':
     import numpy as np
