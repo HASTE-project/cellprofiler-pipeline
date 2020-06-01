@@ -32,7 +32,7 @@ To run locally, with containers:
 
 ```
 docker build -t "benblamey/haste_pipeline_worker_base:latest" ./worker/worker-base 
-docker push "benblamey/haste_pipeline_worker_base:latest"
+docker push "benblamey/haste_pipeline_worker_base:v2"
 
 
 
