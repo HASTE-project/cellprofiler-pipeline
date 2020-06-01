@@ -25,18 +25,18 @@ class LogisticInterestingnessModel:
                         substream_id=None,
                         metadata=None,
                         mongo_collection=None):
-        logging.debug(f'key is {self.key}, k is {self.k}, x_0 is {self.x_0}')
+        logging.debug('key is {}, k is {}, x_0 is {}'.format(self.key, self.k, self.x_0))
 
         foo = metadata
         for key_part in self.key:
             foo = foo[key_part]
         value_of_key = float(foo)
 
-        logging.debug(f'extracted key value {value_of_key}')
+        logging.debug('extracted key value {}'.format(value_of_key))
 
         interestingness_score = 1 / (1 + math.exp(-self.k * (value_of_key - self.x_0)))
 
-        logging.debug(f'interestingness score is {interestingness_score}')
+        logging.debug('interestingness score is {}'.format(interestingness_score))
 
         return {'interestingness': interestingness_score}
 
