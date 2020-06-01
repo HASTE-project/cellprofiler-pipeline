@@ -9,19 +9,12 @@ import csv
 import pika
 import time
 
-# from cellprofiler import __main__ as cell_profiler_main
-
-
-import sys
-
-
 from haste_storage_client.core import HasteStorageClient
 from pika import PlainCredentials
-from sys import argv
-import subprocess
-import shutil
 
-from haste.pipeline.worker.NTierRankedInterestingnessModel import NTierRankedInterestingnessModel
+import subprocess
+
+from worker.haste.pipeline.worker.LogisticInterestingnessModel import LogisticInterestingnessModel
 
 ARG_PARSE_PROG_NAME = 'python2 -u -m haste.pipeline.worker'
 PAUSE_SECS = 5
@@ -41,7 +34,6 @@ DEFAULT_CONFIG = {
             # "pipeline": "/Users/benblamey/projects/haste/haste-image-analysis-spjuth-lab/worker/dry-run/MeasureImageQuality-TestImages.cppipe",
             "pipeline": "/dry-run/MeasureImageQuality-TestImages.cppipe",
             # range 0..8. 0 = focussed, 8 = unfocused.
-            "interestingness_function": "lambda row: float(row[\"ImageQuality_FocusScore_myimages\"])",
             "storage_policy": "[ [0.0, 0.199999999, \"move-to-trash\"], [0.2, 1.0, \"move-to-keep\"] ]",
             "haste_storage_client_config": {
                 "haste_metadata_server": {
@@ -216,7 +208,8 @@ def run_cp(filename, headers):
 
         output_file_image_csv_path = os.path.join(cellprofiler_output_dir, output_file_image_csv)
 
-        row_lambda = eval(config_for_tag['interestingness_function'])
+        # This was old way of specifying trivial IF:
+        #row_lambda = eval(config_for_tag['interestingness_function'])
 
 
         metadata = {}
@@ -230,11 +223,15 @@ def run_cp(filename, headers):
             csv_reader = csv.DictReader(f)
             for row in csv_reader:
 
+
                 # For v2, the key to use to build the quartiles is hard coded for now, instead of using the config.
                 # interestingness = row_lambda(row)
+
                 # logging.info("interestingness for file: {} is: {}".format(image_file_path, interestingness))
                 metadata['cellprofiler_output'] = row
                 # TODO: save the metadata from the other CSV file
+
+                # We take just the first row with a single image.
                 break
 
         # if interestingness is None:
@@ -249,7 +246,13 @@ def run_cp(filename, headers):
             # model = PreComputedInterestingnessModel()
 
             # used this for version 2.
-            model = NTierRankedInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
+            # model = NTierRankedInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
+
+            # used this for version 3.
+            # TODO: these params should be set per-deployment in the K8 deploy scripts...
+            model = LogisticInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'],
+                                                 k=-4.5,
+                                                 x_0=-1.4)
 
             logging.info('starting HSC...')
 
@@ -312,6 +315,8 @@ def create_data_file_list(image_file_path):
 
     return f.name
 
+
+# "test"....
 
 def main():
     global config
