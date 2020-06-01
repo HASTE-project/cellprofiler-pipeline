@@ -14,7 +14,7 @@ from pika import PlainCredentials
 
 import subprocess
 
-from worker.haste.pipeline.worker.LogisticInterestingnessModel import LogisticInterestingnessModel
+from haste.pipeline.worker.LogisticInterestingnessModel import LogisticInterestingnessModel
 
 ARG_PARSE_PROG_NAME = 'python2 -u -m haste.pipeline.worker'
 PAUSE_SECS = 5
