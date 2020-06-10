@@ -49,7 +49,7 @@ if __name__ == '__main__':
     model = LogisticInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
 
     stream_id = 'some_stream_id'
-    PLLSs = np.linspace(-4.5, 1.5, 100)
+    PLLSs = np.linspace(4.5, -1.4, 100)
 
     for plls in PLLSs:
         metadata = {
