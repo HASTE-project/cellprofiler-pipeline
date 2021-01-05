@@ -1,6 +1,29 @@
 [![Build Status](https://travis-ci.org/HASTE-project/cellprofiler-pipeline.svg?branch=master)](https://travis-ci.org/HASTE-project/cellprofiler-pipeline)
 
 
+A simple, distributed, image stream processing pipeline built around CellProfiler, as a case study demonstrating use of the HASTE Toolkit.
+
+The application is intended for 'real time' processing of images from a microscope.
+
+The application comprises a single 'client', which monitors a directory for new images appearing as files on disk, and worker application which invokes CellProfiler.
+Each are built and deployed separately as Docker images. The workers can be scaled for parellel processing.
+
+The repo https://github.com/HASTE-project/k8s-deployments contains code which configures and deploys the application, as demonstrated as the first case study in this paper:
+
+```
+"Rapid development of cloud-native intelligent data pipelines for scientific data streams using the HASTE Toolkit"
+https://www.biorxiv.org/content/10.1101/2020.09.13.274779v1
+```
+
+
+
+Directory structure:
+
+```
+client - client application as a python package and Dockerfile.  
+worker - worker application as a python package and Dockerfile.
+```
+
 
 To run locally (for development):
 
