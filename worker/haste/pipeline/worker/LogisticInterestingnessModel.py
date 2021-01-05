@@ -41,25 +41,3 @@ class LogisticInterestingnessModel:
         return {'interestingness': interestingness_score}
 
 
-# bla
-# Test...
-if __name__ == '__main__':
-    import numpy as np
-
-    model = LogisticInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
-
-    stream_id = 'some_stream_id'
-    PLLSs = np.linspace(4.5, -1.4, 100)
-
-    for plls in PLLSs:
-        metadata = {
-            'cellprofiler_output': {
-                'ImageQuality_PowerLogLogSlope_myimages': plls
-            }
-        }
-
-        result = model.interestingness(
-            stream_id,
-            metadata=metadata,
-        )
-        print(result)

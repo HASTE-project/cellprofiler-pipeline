@@ -1,6 +1,8 @@
 import pymongo
+import pytest
 
 from pymongo import MongoClient
+
 
 if __name__ == '__main__':
     stream_id = '2019_12_11__11_42_24_mikro-testdata-source'
