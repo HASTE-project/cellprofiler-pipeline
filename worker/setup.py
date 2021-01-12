@@ -12,6 +12,7 @@ setup(name='haste_pipeline_worker',
       author='Ben Blamey',
       author_email='ben.blamey@it.uu.se',
       install_requires=[
+          'numpy'
           'pika',
           'haste-storage-client'
       ],
