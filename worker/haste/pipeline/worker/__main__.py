@@ -43,7 +43,7 @@ DEFAULT_CONFIG = {
             "storage_policy": "[ [0.0, 0.199999999, \"move-to-trash\"], [0.2, 1.0, \"move-to-keep\"] ]",
             "interestingness_model": {
                 "name":  "LogisticInterestingnessModel", # TODO: instantiate from this.
-                "key": ['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'],  # CP metadata key path for int score
+                "key": ['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'],  # CP metadata key path for int score. TODO: this could have be dot-delimited.
                 "k": -4.5,  # logistic function param
                 "x_0": -1.4  # logistic function param
             },
