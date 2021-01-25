@@ -28,9 +28,9 @@ worker - worker application as a python package and Dockerfile.
 
 To build and push the Docker images manually:
 ```
-docker build -t "benblamey/haste_pipeline_worker_base:latest" ./worker/worker-base 
-docker build -t "benblamey/haste_pipeline_worker:latest" ./worker ; docker push "benblamey/haste_pipeline_worker:latest"
+docker build -t "benblamey/haste_pipeline_worker_base:v1" ./worker/worker-base 
+docker build -t "benblamey/haste_pipeline_worker:v3" ./worker ; docker push "benblamey/haste_pipeline_worker:v3"
 
-docker build --no-cache=true -t "benblamey/haste_pipeline_client:latest" ./client
-docker push "benblamey/client:latest
+docker build --no-cache=true -t "benblamey/haste_pipeline_client:v1" ./client
+docker push "benblamey/client:v1
 ```

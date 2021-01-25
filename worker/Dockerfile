@@ -1,4 +1,4 @@
-FROM benblamey/haste_pipeline_worker_base:latest
+FROM benblamey/haste_pipeline_worker_base:v1
 
 #WORKDIR /
 #RUN cd /CellProfiler-plugins ; pip install -r requirements.txt

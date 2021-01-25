@@ -14,7 +14,7 @@ setup(name='haste_pipeline_worker',
       install_requires=[
           'numpy',
           'pika',
-          'haste-storage-client'
+          'haste-storage-client==0.13'
       ],
       test_requires=[
           'pytest'
