@@ -10,7 +10,7 @@ before_install:
 # Begin by trying to build the docker images, just to check they are working...the images themselves are not used.
 #  - docker build --no-cache=true -t "benblamey/haste_pipeline_worker_base:latest" ./worker/worker-base
   - docker build --no-cache=true -t "benblamey/haste_pipeline_worker:v3" ./worker
-  - docker build --no-cache=true -t "benblamey/haste_pipeline_client:v1" ./client
+  - docker build --no-cache=true -t "benblamey/haste_pipeline_client:v3" ./client
 
 install:
   - pip install ./worker
