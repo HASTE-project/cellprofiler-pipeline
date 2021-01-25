@@ -26,7 +26,7 @@ worker - worker application as a python package and Dockerfile.
     worker-base - base DockerFile to make it quicker to build the dockerfile for the application itself.
 ```
 
-To build and push the Docker images:
+To build and push the Docker images manually:
 ```
 docker build -t "benblamey/haste_pipeline_worker_base:latest" ./worker/worker-base 
 docker build -t "benblamey/haste_pipeline_worker:latest" ./worker ; docker push "benblamey/haste_pipeline_worker:latest"
