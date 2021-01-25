@@ -41,6 +41,12 @@ DEFAULT_CONFIG = {
             "pipeline": "/dry-run/MeasureImageQuality-TestImages.cppipe",
             # range 0..8. 0 = focussed, 8 = unfocused.
             "storage_policy": "[ [0.0, 0.199999999, \"move-to-trash\"], [0.2, 1.0, \"move-to-keep\"] ]",
+            "interestingness_model": {
+                "name":  "LogisticInterestingnessModel", # TODO: instantiate from this.
+                "key": ['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'],  # CP metadata key path for int score
+                "k": -4.5,  # logistic function param
+                "x_0": -1.4  # logistic function param
+            },
             "haste_storage_client_config": {
                 "haste_metadata_server": {
                     # In K8, this is the service name (since we're in the same namespace'
@@ -254,11 +260,11 @@ def run_cp(filename, headers):
             # used this for version 2.
             # model = NTierRankedInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'])
 
-            # used this for version 3.
-            # TODO: these params should be set per-deployment in the K8 deploy scripts...
-            model = LogisticInterestingnessModel(['cellprofiler_output', 'ImageQuality_PowerLogLogSlope_myimages'],
-                                                 k=-4.5,
-                                                 x_0=-1.4)
+            # used this for version 3 (for the paper).
+            model = LogisticInterestingnessModel(
+                config_for_tag['interestingness_model']['key'],
+                k=config_for_tag['interestingness_model']['k'],
+                x_0=config_for_tag['interestingness_model']['x_0'])
 
             logging.info('starting HSC...')
 
