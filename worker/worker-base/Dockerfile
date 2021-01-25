@@ -1,3 +1,6 @@
+# We build this base Docker image with the more stable dependencies, so it is cached for faster building during development.
+
+
 FROM ubuntu:16.04
 #FROM cellprofiler/cellprofiler:3.1.8
 

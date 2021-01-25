@@ -16,6 +16,12 @@ import subprocess
 
 from haste.pipeline.worker.LogisticInterestingnessModel import LogisticInterestingnessModel
 
+try:
+    with open("/build-date.txt") as f:
+        print("Running from docker image with buildstamp: " + f.read())
+except IOError:
+    print('Not running from docker image (no buildstamp file).')
+
 ARG_PARSE_PROG_NAME = 'python2 -u -m haste.pipeline.worker'
 PAUSE_SECS = 5
 

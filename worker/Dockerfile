@@ -25,6 +25,9 @@ RUN pip install h5py --upgrade
 
 RUN pip freeze
 
+# Inject build stamp
+RUN date >/build-date.txt
+
 # For testing deps etc.
 #CMD python2 -m cellprofiler -c  \
 #    --plugins-directory /CellProfiler-plugins \

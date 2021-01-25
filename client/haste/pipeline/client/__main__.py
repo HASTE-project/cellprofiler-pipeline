@@ -14,6 +14,14 @@ LOGGING_LEVEL = logging.INFO
 LOGGING_FORMAT_DATE = '%Y-%m-%d %H:%M:%S.%d3'
 LOGGING_FORMAT = '%(asctime)s - AGENT - %(threadName)s - %(levelname)s - %(message)s'
 
+
+try:
+    with open("/build-date.txt") as f:
+        print("Running from docker image with buildstamp: " + f.read())
+except IOError:
+    print('Not running from docker image (no buildstamp file).')
+
+
 # TODO
 def create_stream_id(stream_id_tag):
     stream_id = datetime.datetime.today().strftime('%Y_%m_%d__%H_%M_%S') + '_' + stream_id_tag

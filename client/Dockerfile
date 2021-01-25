@@ -8,5 +8,8 @@ COPY setup.py /app/setup.py
 
 RUN pip3 install /app/
 
+# Inject build stamp
+RUN date >/build-date.txt
+
 # see the output more easily in k8 with -u = unbuffered
 ENTRYPOINT ["python","-u","-m","haste.pipeline.client"]

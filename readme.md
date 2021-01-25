@@ -6,7 +6,7 @@ A simple, distributed, image stream processing pipeline built around CellProfile
 The application is intended for 'real time' processing of images from a microscope.
 
 The application comprises a single 'client', which monitors a directory for new images appearing as files on disk, and worker application which invokes CellProfiler.
-Each are built and deployed separately as Docker images. The workers can be scaled for parellel processing.
+Each are built and deployed separately as Docker images. The workers can be scaled for parallel processing.
 
 The repo https://github.com/HASTE-project/k8s-deployments contains code which configures and deploys the application, as demonstrated as the first case study in this paper:
 
@@ -67,7 +67,7 @@ To run locally, with containers:
 
 docker run benblamey/haste_pipeline_client:latest --include png --tag foo --host localhost /Users/benblamey/projects/haste/haste-desktop-agent-images
 
-docker run benblamey/haste_pipeline_worker:latest 
+docker run benblamey/haste_pipeline_worker:v2 
 
 docker run -it --entrypoint=/dry-run/run-imagequality.sh benblamey/haste_pipeline_worker:latest -i
 docker run -it --entrypoint=/bin/bash benblamey/haste_pipeline_worker:latest -i
